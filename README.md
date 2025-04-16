@@ -1,4 +1,4 @@
-# 🌟 Desafio-DIO-Decola-Tech-2025
+# 🌟 API-Para-Gestao-De-Loja-Spring
 
 Este projeto consiste no desenvolvimento de uma API para o gerenciamento de uma loja de eletrônicos e serviços de assistência técnica. A solução permitirá um controle eficiente de produtos, estoque, vendas, ordens de serviço e atendimento ao cliente, proporcionando uma gestão integrada e otimizada para o negócio. 🛒💻
 
