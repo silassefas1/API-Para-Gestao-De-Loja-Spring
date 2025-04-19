@@ -20,5 +20,5 @@ public interface OrderService {
 
     List<Order> findOrdersByCustomerName(String customerName);
 
-    List<Order> findAllOrders(Order orderStatus);
+    List<Order> findAllOrders();
 }

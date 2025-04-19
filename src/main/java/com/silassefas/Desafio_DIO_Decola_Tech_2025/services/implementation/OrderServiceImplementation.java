@@ -128,6 +128,11 @@ public class OrderServiceImplementation implements OrderService {
         return orderRepository.findByCustomerNameContainingIgnoreCase(customerName);
     }
 
+    @Override
+    public List<Order> findAllOrders() {
+        return orderRepository.findAll();
+    }
+
 
     public BigDecimal calculateTotalValue(Order order) {
         return order.getProducts().entrySet().stream()
@@ -135,8 +140,5 @@ public class OrderServiceImplementation implements OrderService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public List<Order> findAllOrders(Order orderStatus){
 
-        return orderRepository.findAll();
-    }
 }
