@@ -26,7 +26,7 @@ public class Order {
     private Customer customer;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status; // PENDING, CONFIRMED, CANCELED
+    private OrderStatus status;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyJoinColumn(name = "product_id")
