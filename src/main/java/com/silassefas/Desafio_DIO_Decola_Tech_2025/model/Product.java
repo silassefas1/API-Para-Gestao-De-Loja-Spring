@@ -25,11 +25,11 @@ public class Product {
     private BigDecimal price;
     private String category;
 
-    @Column(updatable = false)
+    @Column(updatable = false, name = "created_at")
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm Z")
     private ZonedDateTime createdAt;
 
-
+    @Column(name = "updated_at")
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm Z")
     private LocalDateTime updatedAt;
 
