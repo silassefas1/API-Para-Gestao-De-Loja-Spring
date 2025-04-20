@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    List<Order> findByCustomerNameContainingIgnoreCase(String customerName);
+    List<Order> findByUserNameContainingIgnoreCase(String userName);
 
 }

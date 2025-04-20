@@ -56,13 +56,13 @@ classDiagram
 
     class Order {
         - Long id
-        - Customer customer
+        - User user
         - ZonedDateTime orderDate
         - Map<Product, Integer> products
         - BigDecimal totalValue
         - OrderStatus status  // Adicionar status como CART, PENDING, CONFIRMED, CANCELED
         
-        + Order createOrder(Long customerId)  // Cria um novo carrinho de compras
+        + Order createOrder(Long userId)  // Cria um novo carrinho de compras
         + BigDecimal calculateTotalValue(Map<Product, Integer> products)
         + void addProduct(Product product, Integer quantity)  // Adiciona produto ao carrinho
         + void removeProduct(Product product, Integer quantity)  // Remove produto do carrinho
@@ -70,7 +70,7 @@ classDiagram
         + void clearCart()  // Limpa o carrinho
         + Order confirmOrder()  // Transforma o carrinho em um pedido confirmado
         + Order cancelOrder()  // Cancela o carrinho
-        + List<Order> findOrdersByCustomerName(String customerName)
+        + List<Order> findOrdersByUserName(String userName)
     }
 
     class Sale {
@@ -81,22 +81,22 @@ classDiagram
         
         + void finalizeSale()  
         + void cancelSale() 
-        + Order findOrderByCustomerName(String name)
+        + Order findOrderByUserName(String name)
     }
 
-    class Customer {
+    class User {
         - Long id
         - String name
         - String email
         - String phone
         - String address
-        - CustomerType type
+        - UserType type
         - ZonedDateTime registrationDate
-        + void registerCustomer()
-        + void updateCustomer()
-        + void deleteCustomer()
-        + Customer findById(Long id)
-        + List<Customer> listCustomers()
+        + void registerUser()
+        + void updateUser()
+        + void deleteUser()
+        + User findById(Long id)
+        + List<User> listUser()
     }
 
     class Supplier {
@@ -151,7 +151,7 @@ classDiagram
         REFUNDED
     }
 
-    class CustomerType {
+    class UserType {
         <<enumeration>>
         INDIVIDUAL
         COMPANY
@@ -183,14 +183,14 @@ classDiagram
     Stock "1" --> "n" StockMovement : logs
     StockMovement "1" --> "1" MovementType : categorized_as
     Stock "1" --> "1" Product : manages
-    Customer "1" --> "n" Order : places
+    User "1" --> "n" Order : places
     Order "1" --> "1" Sale : generates
     Sale "1" --> "1" FinancialTransaction : records
     Order "1" --> "n" Product : contains
     Supplier "1" --> "n" Purchase : supplies
     Purchase "1" --> "n" Product : includes
     FinancialTransaction "1" --> "1" Purchase : logs
-    Customer "1" --> "1" CustomerType : classified_as
+    User "1" --> "1" UserType : classified_as
 
 ```
 ## ✅ Funcionalidades

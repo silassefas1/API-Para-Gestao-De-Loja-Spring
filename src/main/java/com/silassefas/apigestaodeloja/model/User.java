@@ -1,7 +1,7 @@
 package com.silassefas.apigestaodeloja.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.silassefas.apigestaodeloja.enums.CustomerType;
+import com.silassefas.apigestaodeloja.enums.UserType;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,9 +16,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "tb_customer")
+@Table(name = "tb_user")
 @EqualsAndHashCode
-public class Customer implements Serializable {
+public class User implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -29,30 +29,31 @@ public class Customer implements Serializable {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "customer_type")
-    private CustomerType customerType;
+    @Column(name = "user_type")
+    private UserType userType;
 
     @Column(unique = true)
     private String cpfCnpj;
 
     private String email;
+    private String password;
     private String phone;
     private String address;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Order> orders = new ArrayList<>();
     private ZonedDateTime registrationDate;
 
 
-    public Customer(){
+    public User(){
         this.registrationDate = ZonedDateTime.now();
     }
 
-    public Customer(Long id, String name, CustomerType customerType, String cpfCnpj, String email, String phone, String address) {
+    public User(Long id, String name, UserType userType, String cpfCnpj, String email, String phone, String address) {
         this.id = id;
         this.name = name;
-        this.customerType = customerType;
+        this.userType = userType;
         this.cpfCnpj = cpfCnpj;
         this.email = email;
         this.phone = phone;

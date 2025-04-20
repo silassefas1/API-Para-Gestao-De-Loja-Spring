@@ -9,5 +9,5 @@ public interface SaleService  {
 
     Sale cancelSale(Long saleId);
 
-    List<Sale> findSalesByCustomerName(String customerName);
+    List<Sale> findSalesByUserName(String userName);
 }

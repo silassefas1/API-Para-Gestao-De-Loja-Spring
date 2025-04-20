@@ -3,18 +3,18 @@ package com.silassefas.apigestaodeloja.enums;
 import lombok.Getter;
 
 @Getter
-public enum CustomerType {
+public enum UserType {
     INDIVIDUAL("INDIVIDUAL"),
     BUSINESS("BUSINESS");
 
     private final String value;
 
-    CustomerType(String value) {
+    UserType(String value) {
         this.value = value;
     }
 
-    public static CustomerType fromValue(String value) {
-        for (CustomerType type : CustomerType.values()) {
+    public static UserType fromValue(String value) {
+        for (UserType type : UserType.values()) {
             if (type.getValue().equals(value)) {
                 return type;
             }

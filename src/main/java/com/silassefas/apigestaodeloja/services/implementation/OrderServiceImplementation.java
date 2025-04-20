@@ -1,10 +1,10 @@
 package com.silassefas.apigestaodeloja.services.implementation;
 
 import com.silassefas.apigestaodeloja.enums.OrderStatus;
-import com.silassefas.apigestaodeloja.model.Customer;
+import com.silassefas.apigestaodeloja.model.User;
 import com.silassefas.apigestaodeloja.model.Order;
 import com.silassefas.apigestaodeloja.model.Product;
-import com.silassefas.apigestaodeloja.repository.CustomerRepository;
+import com.silassefas.apigestaodeloja.repository.UserRepository;
 import com.silassefas.apigestaodeloja.repository.OrderRepository;
 import com.silassefas.apigestaodeloja.repository.ProductRepository;
 import com.silassefas.apigestaodeloja.services.OrderService;
@@ -22,18 +22,18 @@ public class OrderServiceImplementation implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private ProductRepository productRepository;
 
     @Override
     @Transactional
-    public Order createOrder(Long customerId) {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+    public Order createOrder(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
         Order order = new Order();
-        order.setCustomer(customer);
+        order.setUser(user);
         order.setStatus(OrderStatus.PENDING);
         return orderRepository.save(order);
     }
@@ -124,8 +124,8 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> findOrdersByCustomerName(String customerName) {
-        return orderRepository.findByCustomerNameContainingIgnoreCase(customerName);
+    public List<Order> findOrdersByUserName(String userName) {
+        return orderRepository.findByUserNameContainingIgnoreCase(userName);
     }
 
     @Override

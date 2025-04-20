@@ -24,8 +24,8 @@ public class SaleController {
         return saleService.cancelSale(saleId);
     }
 
-    @GetMapping("/customer/{customerName}")
-    public List<Sale> getSalesByCustomer(@PathVariable String customerName) {
-        return saleService.findSalesByCustomerName(customerName);
+    @GetMapping("/user/{userName}")
+    public List<Sale> getSalesByUser(@PathVariable String userName) {
+        return saleService.findSalesByUserName(userName);
     }
 }

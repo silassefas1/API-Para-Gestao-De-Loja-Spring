@@ -41,7 +41,7 @@ public class SaleServiceImplementation implements SaleService {
     }
 
     @Override
-    public List<Sale> findSalesByCustomerName(String customerName) {
-        return saleRepository.findByOrderCustomerNameContainingIgnoreCase(customerName);
+    public List<Sale> findSalesByUserName(String userName) {
+        return saleRepository.findByOrderUserNameContainingIgnoreCase(userName);
     }
 }

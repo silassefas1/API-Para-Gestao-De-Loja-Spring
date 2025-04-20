@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    Order createOrder(Long customerId);
+    Order createOrder(Long userId);
 
     Order addProduct(Long orderId, Long productId, Integer quantity);
 
@@ -18,7 +18,7 @@ public interface OrderService {
 
     Order cancelOrder(Long orderId);
 
-    List<Order> findOrdersByCustomerName(String customerName);
+    List<Order> findOrdersByUserName(String userName);
 
     List<Order> findAllOrders();
 }

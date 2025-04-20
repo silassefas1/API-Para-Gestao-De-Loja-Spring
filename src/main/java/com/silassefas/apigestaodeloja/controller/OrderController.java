@@ -15,9 +15,9 @@ public class OrderController {
     private OrderService orderService;
 
 
-    @PostMapping("/create/{customerId}")
-    public Order createOrder(@PathVariable Long customerId) {
-        return orderService.createOrder(customerId);
+    @PostMapping("/create/{userId}")
+    public Order createOrder(@PathVariable Long userId) {
+        return orderService.createOrder(userId);
     }
 
     @PostMapping("/{orderId}/add-product/{productId}/{quantity}")
@@ -45,9 +45,9 @@ public class OrderController {
         return orderService.cancelOrder(orderId);
     }
 
-    @GetMapping("/customer/{customerName}")
-    public List<Order> getOrdersByCustomer(@PathVariable String customerName) {
-        return orderService.findOrdersByCustomerName(customerName);
+    @GetMapping("/user/{userName}")
+    public List<Order> getOrdersByUser(@PathVariable String userName) {
+        return orderService.findOrdersByUserName(userName);
     }
 
     @GetMapping("/findAll")
