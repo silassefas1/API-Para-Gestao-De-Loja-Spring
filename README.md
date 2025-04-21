@@ -12,7 +12,7 @@ Abaixo está o diagrama de classes que representa a estrutura do projeto e as re
 
 ```mermaid
 classDiagram
-    %% Model Classes
+    %% ENTIDADES
     class Product {
         - Long id
         - String name
@@ -21,13 +21,6 @@ classDiagram
         - String category
         - ZonedDateTime createdAt
         - ZonedDateTime updatedAt
-        + void createProduct()
-        + void updateProduct()
-        + void deleteProduct()
-        + Product findById(Long id)
-        + List<Product> findByNameContainingIgnoreCaseAndAccents(String name)
-        + List<Product> findAll()
-        + List<Product> findByCategoryContainingIgnoringCaseAndAccents(String category)
     }
 
     class Stock {
@@ -38,11 +31,6 @@ classDiagram
         - Integer maxStock
         - List<StockMovement> movements
         - ZonedDateTime lastUpdated
-        + void registerEntry(Integer quantity)
-        + void registerExit(Integer quantity)
-        + boolean checkMinimumStock()
-        + boolean checkMaximumStock()
-        + Integer calculateCurrentStock()
     }
 
     class StockMovement {
@@ -51,7 +39,6 @@ classDiagram
         - MovementType movementType
         - Integer quantity
         - ZonedDateTime movementDate
-        + void registerMovement()
     }
 
     class Order {
@@ -60,28 +47,14 @@ classDiagram
         - ZonedDateTime orderDate
         - Map<Product, Integer> products
         - BigDecimal totalValue
-        - OrderStatus status  // Adicionar status como CART, PENDING, CONFIRMED, CANCELED
-        
-        + Order createOrder(Long userId)  // Cria um novo carrinho de compras
-        + BigDecimal calculateTotalValue(Map<Product, Integer> products)
-        + void addProduct(Product product, Integer quantity)  // Adiciona produto ao carrinho
-        + void removeProduct(Product product, Integer quantity)  // Remove produto do carrinho
-        + void updateProductQuantity(Product product, Integer newQuantity)  // Atualiza a quantidade
-        + void clearCart()  // Limpa o carrinho
-        + Order confirmOrder()  // Transforma o carrinho em um pedido confirmado
-        + Order cancelOrder()  // Cancela o carrinho
-        + List<Order> findOrdersByUserName(String userName)
+        - OrderStatus status
     }
 
     class Sale {
         - Long id
-        - Order order  
+        - Order order
         - ZonedDateTime saleDate
         - PaymentStatus paymentStatus
-        
-        + void finalizeSale()  
-        + void cancelSale() 
-        + Order findOrderByUserName(String name)
     }
 
     class User {
@@ -90,13 +63,10 @@ classDiagram
         - String email
         - String phone
         - String address
+        - String password
         - UserType type
+        - UserRole role
         - ZonedDateTime registrationDate
-        + void registerUser()
-        + void updateUser()
-        + void deleteUser()
-        + User findById(Long id)
-        + List<User> listUser()
     }
 
     class Supplier {
@@ -104,11 +74,6 @@ classDiagram
         - String name
         - String contact
         - String address
-        + void registerSupplier()
-        + void updateSupplier()
-        + void deleteSupplier()
-        + List<Supplier> listSuppliers()
-        + Supplier findById(Long id)
     }
 
     class Purchase {
@@ -117,26 +82,103 @@ classDiagram
         - Map<Product, Integer> products
         - BigDecimal totalValue
         - PurchaseStatus status
-        + void addProduct(Product product, Integer quantity)
-        + void removeProduct(Product product)
-        + BigDecimal calculateTotalValue()
-        + void updatePurchaseStatus()
     }
 
     class FinancialTransaction {
         - Long id
-        - TransactionType type  
+        - TransactionType type
         - BigDecimal amount
         - ZonedDateTime transactionDate
         - String description
-        + void registerTransaction()
-        + void adjustTransaction()
+        - Purchase purchase
     }
 
+    %% DTOs
+    class ProductDTO {
+        <<DTO>>
+        + Long id
+        + String name
+        + String description
+        + BigDecimal price
+        + String category
+    }
 
+    class StockDTO {
+        <<DTO>>
+        + Long id
+        + Long productId
+        + Integer availableQuantity
+        + Integer minStock
+        + Integer maxStock
+        + ZonedDateTime lastUpdated
+    }
 
+    class StockMovementDTO {
+        <<DTO>>
+        + Long id
+        + Long stockId
+        + MovementType movementType
+        + Integer quantity
+        + ZonedDateTime movementDate
+    }
 
-    %% Enum Classes 
+    class OrderDTO {
+        <<DTO>>
+        + Long id
+        + Long userId
+        + Map<Long, Integer> productQuantities
+        + BigDecimal totalValue
+        + OrderStatus status
+        + ZonedDateTime orderDate
+    }
+
+    class SaleDTO {
+        <<DTO>>
+        + Long id
+        + Long orderId
+        + ZonedDateTime saleDate
+        + PaymentStatus paymentStatus
+    }
+
+    class UserDTO {
+        <<DTO>>
+        + Long id
+        + String name
+        + String email
+        + String phone
+        + String address
+        + UserType type
+        + UserRole role
+    }
+
+    class SupplierDTO {
+        <<DTO>>
+        + Long id
+        + String name
+        + String contact
+        + String address
+    }
+
+    class PurchaseDTO {
+        <<DTO>>
+        + Long id
+        + ZonedDateTime purchaseDate
+        + Map<Long, Integer> productQuantities
+        + BigDecimal totalValue
+        + PurchaseStatus status
+    }
+
+    class FinancialTransactionDTO {
+        <<DTO>>
+        + Long id
+        + TransactionType type
+        + BigDecimal amount
+        + ZonedDateTime transactionDate
+        + String description
+        + Long purchaseId
+    }
+
+    %% Enums
     class OrderStatus {
         <<enumeration>>
         PENDING
@@ -155,6 +197,13 @@ classDiagram
         <<enumeration>>
         INDIVIDUAL
         COMPANY
+    }
+
+    class UserRole {
+        <<enumeration>>
+        ADMIN
+        EMPLOYEE
+        CUSTOMER
     }
 
     class PurchaseStatus {
@@ -179,7 +228,7 @@ classDiagram
         ADJUSTMENT
     }
 
-    %% Relacionamentos Principais
+    %% RELACIONAMENTOS ENTRE ENTIDADES
     Stock "1" --> "n" StockMovement : logs
     StockMovement "1" --> "1" MovementType : categorized_as
     Stock "1" --> "1" Product : manages
@@ -191,6 +240,26 @@ classDiagram
     Purchase "1" --> "n" Product : includes
     FinancialTransaction "1" --> "1" Purchase : logs
     User "1" --> "1" UserType : classified_as
+    User "1" --> "1" UserRole : authorized_as
+
+    %% RELACIONAMENTO DTO x CLASSES e ENUMS
+    ProductDTO --> Product
+    StockDTO --> Stock
+    StockMovementDTO --> StockMovement
+    OrderDTO --> Order
+    SaleDTO --> Sale
+    UserDTO --> User
+    SupplierDTO --> Supplier
+    PurchaseDTO --> Purchase
+    FinancialTransactionDTO --> FinancialTransaction
+
+    OrderDTO --> OrderStatus
+    SaleDTO --> PaymentStatus
+    UserDTO --> UserType
+    UserDTO --> UserRole
+    PurchaseDTO --> PurchaseStatus
+    StockMovementDTO --> MovementType
+    FinancialTransactionDTO --> TransactionType
 
 ```
 ## ✅ Funcionalidades
