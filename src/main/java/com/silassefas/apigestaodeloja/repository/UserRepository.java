@@ -1,5 +1,6 @@
 package com.silassefas.apigestaodeloja.repository;
 
+import com.silassefas.apigestaodeloja.dto.UserResponseDTO;
 import com.silassefas.apigestaodeloja.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByNameContainingIgnoreCase(String userName);
 
     User findByName(String userName);
+
+
 }

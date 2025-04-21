@@ -1,22 +1,24 @@
 package com.silassefas.apigestaodeloja.services;
 
+import com.silassefas.apigestaodeloja.dto.UserRequestDTO;
+import com.silassefas.apigestaodeloja.dto.UserResponseDTO;
 import com.silassefas.apigestaodeloja.model.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    User createUser(User user);
+    User createUser(UserRequestDTO user);
 
-    User updateUser(Long userId, User userDateToUpdate);
+    User updateUser(Long userId, UserRequestDTO userDateToUpdate);
 
-    User deleteUser(Long userId);
+    UserResponseDTO deleteUser(Long userId);
 
-    User findById(Long id);
+    UserResponseDTO findById(Long id);
 
     User findUserByCpfCnpj(String cpf);
 
-    List<User> findAll();
+    List<UserResponseDTO> findAll();
 
     List<User> findByNameContainingIgnoreCaseAndAccents(String userName);
 

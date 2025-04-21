@@ -1,5 +1,7 @@
 package com.silassefas.apigestaodeloja.controller;
 
+import com.silassefas.apigestaodeloja.dto.UserRequestDTO;
+import com.silassefas.apigestaodeloja.dto.UserResponseDTO;
 import com.silassefas.apigestaodeloja.model.User;
 import com.silassefas.apigestaodeloja.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,28 +21,28 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user){
-        return ResponseEntity.ok(userService.createUser(user));
+    @PostMapping //feito
+    public ResponseEntity<User> createUser(@RequestBody UserRequestDTO userRequestDTO){
+        return ResponseEntity.ok(userService.createUser(userRequestDTO));
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> findAllUser(){
+    @GetMapping //feito
+    public ResponseEntity<List<UserResponseDTO>> findAllUser(){
         return ResponseEntity.ok(userService.findAll());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable Long id){
+    @DeleteMapping("/{id}")//feito
+    public ResponseEntity<UserResponseDTO> deleteUser(@PathVariable Long id){
         return ResponseEntity.ok(userService.deleteUser(id));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user){
-        return ResponseEntity.ok(userService.updateUser(id, user));
+    @PutMapping("/{id}") //feito
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO){
+        return ResponseEntity.ok(userService.updateUser(id, userRequestDTO));
     }
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
+    @GetMapping("/id/{id}") //feito
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
         return ResponseEntity.ok(userService.findById(id));
     }
 
