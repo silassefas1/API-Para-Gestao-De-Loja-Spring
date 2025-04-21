@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "sales")
+@Table(name = "tb_sales")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
