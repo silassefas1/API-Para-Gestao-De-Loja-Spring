@@ -16,10 +16,10 @@ public interface UserService {
 
     UserResponseDTO findById(Long id);
 
-    User findUserByCpfCnpj(String cpf);
+    UserResponseDTO findUserByCpfCnpj(String cpf);
 
     List<UserResponseDTO> findAll();
 
-    List<User> findByNameContainingIgnoreCaseAndAccents(String userName);
+    List<UserResponseDTO> findByNameContainingIgnoreCaseAndAccents(String userName);
 
 }

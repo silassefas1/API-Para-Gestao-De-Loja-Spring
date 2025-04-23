@@ -97,9 +97,8 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserResponseDTO findById(Long id) {
-        User user = new User();
-        user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado!"));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado para o ID informado!"));
         UserResponseDTO userResponseDTO = new UserResponseDTO();
         userResponseDTO.setName(user.getName());
         userResponseDTO.setUserType(user.getUserType());
@@ -113,13 +112,35 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User findUserByCpfCnpj(String cpfCnpj) {
-        Optional<User> user = userRepository.findUserByCpfCnpj(cpfCnpj);
-        return user.orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado!"));
+    public UserResponseDTO findUserByCpfCnpj(String cpfCnpj) {
+        User user = userRepository.findUserByCpfCnpj(cpfCnpj).orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado para o CNPJ/CPF informado!"));
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setName(user.getName());
+        userResponseDTO.setUserType(user.getUserType());
+        userResponseDTO.setCpfCnpj(user.getCpfCnpj());
+        userResponseDTO.setEmail( user.getEmail());
+        userResponseDTO.setPhone(user.getPhone());
+        userResponseDTO.setAddress(user.getAddress());
+        userResponseDTO.setRegistrationDate(user.getRegistrationDate());
+        userResponseDTO.setLastUpdateDate(user.getLastUpdateDate());
+        return userResponseDTO;
     }
 
     @Override
-    public List<User> findByNameContainingIgnoreCaseAndAccents(String userName) {
-        return userRepository.findByNameContainingIgnoreCase(userName);
+    public List<UserResponseDTO> findByNameContainingIgnoreCaseAndAccents(String userName) {
+        List<User> users = userRepository.findByNameContainingIgnoreCase(userName);
+        return  users.stream().map(
+                user -> new UserResponseDTO(
+                        user.getId(),
+                        user.getName(),
+                        user.getUserType(),
+                        user.getCpfCnpj(),
+                        user.getEmail(),
+                        user.getPhone(),
+                        user.getAddress(),
+                        user.getRegistrationDate(),
+                        user.getLastUpdateDate()
+                )
+        ).toList();
     }
 }

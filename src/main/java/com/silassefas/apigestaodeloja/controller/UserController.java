@@ -47,12 +47,12 @@ public class UserController {
     }
 
     @GetMapping("/cpfCnpj/{cpfCnpj}")
-    public ResponseEntity<User> findUserByCpfCnpj(@PathVariable String cpfCnpj){
+    public ResponseEntity<UserResponseDTO> findUserByCpfCnpj(@PathVariable String cpfCnpj){
         return ResponseEntity.ok(userService.findUserByCpfCnpj(cpfCnpj));
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<List<User>> findByNameContainingIgnoreCase(String userName){
+    public ResponseEntity<List<UserResponseDTO>> findByNameContainingIgnoreCase(String userName){
         return ResponseEntity.ok(userService.findByNameContainingIgnoreCaseAndAccents(userName));
     }
 }
